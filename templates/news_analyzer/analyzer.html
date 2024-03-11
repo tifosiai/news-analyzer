@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/analyzer.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+<!-- Increased the width to w-3/4 to make the container wider -->
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-3/4">
+        <!-- Form Section -->
+        <div class="mb-4">
+            <label for="inputText" class="block text-gray-700 text-sm font-bold mb-2">News URL here:</label>
+            <input type="text" id="inputText"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="https://oxu.az/sport/847658">
+            <select id="dropdown"
+                class="mt-2 block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                <option>Select a model</option>
+                <option value="svm">Support Vector Classifier</option>
+                <option value="knn">K Nearest Neigbors</option>
+                <option value="lr">Logistic Regression</option>
+            </select>
+        </div>
+        <button
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
+
+        <!-- Display Section -->
+        <div class="mt-8">
+            <input type="text" value="News Title"
+                class="mt-4 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
+                readonly>
+            <textarea class="mt-4 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
+                rows="4" readonly>News Content</textarea>
+            <div class="mt-4">
+                <span
+                    class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#topic1</span>
+                <span
+                    class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#topic2</span>
+                <span
+                    class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">#topic3</span>
+            </div>
+            <p class="mt-4">Sentiment: <span class="font-semibold">positive / negative / neutral</span></p>
+            <p>Category: <span class="font-semibold">[Specify category]</span></p>
+            <div class="flex flex-col md:flex-row">
+                <div class="w-full md:w-1/2 py-6" id="donut-chart"></div>
+                <div class="w-full md:w-1/2 py-6" id="column-chart"></div>
+            </div>
+            <div class="flex flex-col md:flex-row">
+                <div class="w-full md:w-1/2 py-6" id="pie-chart-1"></div>
+                <div class="w-full md:w-1/2 py-6" id="pie-chart-2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="{% static 'js/analyzer.js' %}"></script>
+
+{% endblock content %}
