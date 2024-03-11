@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AZNLP</title>
+    <link rel="shortcut icon" href="..\images\favicon.ico" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <script src="https://unpkg.com/flowbite@1.5.1/dist/flowbite.js"></script>
+    <!-- Navigation Bar -->
+    <nav class="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-2.5">
+        <a href="index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img src="..\images\logo.png" class="h-8" alt="AZNLP Logo" />
+            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">AZNLP</span>
+        </a>
+        <button data-collapse-toggle="navbar-dropdown" type="button" class="inline-flex items-center p-2 ms-3 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-dropdown" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+            </svg>
+        </button>
+        <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
+            <ul class="flex flex-col font-medium p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:mt-0 md:text-sm  md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 md:space-x-8 md:rtl:space-x-reverse">
+            <li>
+                <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full py-2 px-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-gray-400 dark:hover:text-white dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">Products <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+        </svg></button>
+                <!-- Dropdown menu -->
+                <div id="dropdownNavbar" class="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownLargeButton">
+                        <li>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">News Analyzer</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a href="about.html" class="block py-2 px-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">About</a>
+            </li>
+            <li>
+                <a href="contact.html" class="block py-2 px-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
+            </li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+  
+
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-2xl font-semibold mb-4">Terms of Service</h1>
+        <p class="mb-4">These Terms of Service ("Terms") govern your access to and use of AZNLP's services, websites, and applications (the "Service"). By accessing or using the Service, you agree to be bound by these Terms. If you do not agree to these Terms, do not use the Service.</p>
+        
+        <h2 class="text-xl font-semibold mb-3">Account Terms</h2>
+        <ul class="list-disc pl-5 mb-4">
+            <li>Accounts must be created by individuals. Automated registrations by "bots" or other automated methods are prohibited.</li>
+            <li>You must provide your full legal name, a valid email address, and any other information requested in order to complete the signup process.</li>
+            <li>You are responsible for maintaining the security of your account and password. AZNLP cannot and will not be liable for any loss or damage from your failure to comply with this security obligation.</li>
+            <li>No individual or legal entity may maintain more than one free account.</li>
+            <li>AZNLP may communicate with you via email or other means regarding your account, system updates, or other issues related to your use of the Service.</li>
+            <li>You are responsible for all content posted and activity that occurs under your account, including content posted by others who have access to your account.</li>
+            <li>The Service must be used for legal purposes only and in compliance with all applicable laws in your jurisdiction.</li>
+            <li>Your account is limited to a certain number of concurrent sessions, as defined by AZNLP.</li>
+            <li>AZNLP reserves the right to refuse service to anyone for any reason at any time.</li>
+        </ul>
+        
+        <h2 class="text-xl font-semibold mb-3">Payment and Access</h2>
+        <ul class="list-disc pl-5 mb-4">
+            <li>A valid credit card is required for paid accounts. Free accounts are not required to provide a credit card number.</li>
+            <li>If you upgrade or downgrade your plan, your billing rate will change accordingly and immediately.</li>
+            <li>Payments are nonrefundable. There are no refunds for partially used periods or downgrades.</li>
+            <li>AZNLP's policy does not allow extending discounts beyond 12 months.</li>
+            <li>You are responsible for all taxes, except those based on AZNLP's net income. You agree to pay any taxes that might be applicable to your use of the Service and payments you make.</li>
+        </ul>
+        
+        <h2 class="text-xl font-semibold mb-3">Modifications to the Service and Fees</h2>
+        <ul class="list-disc pl-5 mb-4">
+            <li>AZNLP reserves the right to modify, suspend, or discontinue the Service at any time, for any reason, with or without notice.</li>
+            <li>AZNLP reserves the right to change service fees with 30 days' notice. These changes will be communicated via email and posted on the pricing page.</li>
+            <li>AZNLP reserves the right to update and change the Terms at any time without notice. Continued use of the Service after any such changes shall constitute your consent to such changes.</li>
+        </ul>
+        
+        <h2 class="text-xl font-semibold mb-3">Use of the Service</h2>
+        <p class="mb-4">Your use of the Service is at your sole risk. The Service is provided on an "as is" and "as available" basis. Support for AZNLP services is only available in English, via email.</p>
+        
+        <h2 class="text-xl font-semibold mb-3">Cancellation and Termination</h2>
+        <ul class="list-disc pl-5 mb-4">
+            <li>You are solely responsible for properly canceling your account. Instructions on how to cancel your account can be found in the Service interface.</li>
+            <li>AZNLP has the right to suspend or terminate your account and refuse any and all current or future use of the Service for any reason at any time.</li>
+        </ul>
+        
+        <h2 class="text-xl font-semibold mb-3">General Conditions</h2>
+        <p class="mb-4">Your use of the Service is at your own risk. The service is provided on an "as-is" and "as-available" basis. Technical support is only available via email.</p>
+
+        <h2 class="text-xl font-semibold mb-3">Contact Us</h2>
+        <ul class="list-disc ml-8 mb-4">
+            
+        </ul>
+        <ul class="list-disc ml-8 mb-4">
+            <li>Email: hello@aznlp.com</li>
+            <li>Phone: +994 55 555 55 55</li>
+            <li>Website: www.aznlp.com</li>
+        </ul>
+        <p>These Terms of Service are effective as of 10 March, 2024 and will remain in effect except with respect to any changes in its provisions in the future, which will be in effect immediately after being posted on this page.</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-900">
+        <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+            <div class="md:flex md:justify-between">
+            <div class="mb-6 md:mb-0">
+                <a href="https://flowbite.com/" class="flex items-center">
+                    <img src="..\images\logo.png" class="h-8 me-3" alt="FlowBite Logo" />
+                    <span class="self-center text-3xl font-semibold whitespace-nowrap dark:text-white">AZNLP</span>
+                </a>
+            </div>
+            <div class="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-4">
+                <div>
+                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Resources</h2>
+                    <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                        <li class="mb-4">
+                            <a href="https://github.com/aznlp-official" class="hover:underline">GitHub</a>
+                        </li>
+                        <li>
+                            <a href="https://huggingface.co/aznlp" class="hover:underline">HuggingFace</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Media</h2>
+                    <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                        <li class="mb-4">
+                            <a href="https://medium.com/@aznlp" class="hover:underline">Blog</a>
+                        </li>
+                        <li>
+                            <a href="https://www.pinterest.com/aznlpofficial" class="hover:underline">Gallery</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Legal</h2>
+                    <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                        <li class="mb-4">
+                            <a href="policy.html" class="hover:underline">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="terms.html" class="hover:underline">Terms &amp; Conditions</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">Contact us</h2>
+                    <ul class="text-gray-500 dark:text-gray-400 font-medium">
+                        <li class="mb-4">
+                            <a href="tel:+994555555555" class="hover:underline">+994 55 555 55 55</a>
+                        </li>
+                        <li>
+                            <a href="mailto:hello@aznlp.com" class="hover:underline">hello@aznlp.com</a>
+                        </li>
+                    </ul>                    
+                </div>
+            </div>
+        </div>
+        <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+        <div class="sm:flex sm:items-center sm:justify-between">
+            <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 AZNLP™. All Rights Reserved.
+            </span>
+            <div class="flex mt-4 sm:justify-center sm:mt-0">
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/aznlp.official" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
+                    <i class="fab fa-instagram" aria-hidden="true"></i>
+                    <span class="sr-only">Instagram page</span>
+                </a>
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/aznlp.official" class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">
+                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                    <span class="sr-only">Facebook page</span>
+                </a>
+                <!-- X (Twitter) -->
+                <a href="https://twitter.com/aznlp_official" class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                    <span class="sr-only">Twitter page</span>
+                </a>
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/company/aznlp" class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">
+                    <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                    <span class="sr-only">LinkedIn page</span>
+                </a>
+                <!-- YouTube -->
+                <a href="https://www.youtube.com/@aznlp.official" class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">
+                    <i class="fab fa-youtube" aria-hidden="true"></i>
+                    <span class="sr-only">YouTube channel</span>
+                </a>
+                <!-- TikTok -->
+                <a href="https://www.tiktok.com/@aznlp.official" class="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5">
+                    <i class="fab fa-tiktok" aria-hidden="true"></i>
+                    <span class="sr-only">TikTok profile</span>
+                </a>
+            </div>
+        </div>
+        </div>
+        </div>
+    </footer>
+
+</body>
+</html>
