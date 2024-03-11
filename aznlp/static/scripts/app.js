@@ -61,7 +61,7 @@ const getChartOptions = () => {
         top: -2,
       },
     },
-    labels: ["Cat1", "Cat2", "Cat3", "Cat4"],
+    labels: ["Cat1", "Cat2", "Cat3", "Cat4", "Cat5"],
     dataLabels: {
       enabled: false,
     },
