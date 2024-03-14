@@ -3,14 +3,7 @@ from ML_Utils.Sentiment import Sentiment
 from Stemmer import Stemmer
 
 
-stemmer = Stemmer()
-sentiment = Sentiment()
-
-
 def home_page(request):
-    text = "Salam mənim adım Ramildir."
-    res = stemmer.stem(text)
-    print(res)
     return render(request, "home/homepage.html")
 
 
