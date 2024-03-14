@@ -18,11 +18,15 @@ def news_analyzer(request):
                 return render(request=request, template_name="news_analyzer/analyzer.html")
             try:
                 scraped_values = scraper.scrape(scrape_url)
-                sentiment_result = sentiment.predict(scraped_values["Content"])
+                input_text = scraped_values["Content"]
+                sentiment_result = sentiment.predict(input_text)
+                probabilities = sentiment.get_probabilities(input_text)
                 context = {"news_title": scraped_values["Title"], 
                         "news_content": scraped_values["Content"], 
                         "sentiment":sentiment_result, 
-                        "scrape_url":scrape_url, "scraping_issue":scraping_issue}
+                        "scrape_url":scrape_url,
+                        "scraping_issue":scraping_issue, 
+                        "probabilities": probabilities}
                 return render(request=request, template_name="news_analyzer/analyzer.html", context=context)
             except:
                 scraping_issue = True

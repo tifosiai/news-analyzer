@@ -18,12 +18,19 @@ AZNLP
                 cold-pressed tacos poke beard tote bag. Heirloom echo park mlkshk tote bag selvage hot chicken authentic
                 tumeric truffaut hexagon try-hard chambray.</p>
             <div class="flex justify-center">
-                <button
-                    class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Start Analyzing</button>
+                <a href="{% url "news_analyzer" %}"
+                    class="inline-flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Start Analyzing</a>
             </div>
         </div>
         <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-            <img class="object-cover object-center rounded" alt="hero" src="{% static 'images/home_news2.svg' %}">
+          <creattie-embed
+            src="{% static 'images/home_analysis_dude.json' %}"
+            delay="0"
+            speed="100"
+            frame_rate="24"
+            trigger="loop" class="object-cover object-center rounded max-w-md">
+            </creattie-embed>
+            <!-- <img class="object-cover object-center rounded" alt="hero" src="{% static 'images/home_news2.svg' %}"> -->
         </div>
     </div>
 </section>

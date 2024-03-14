@@ -22,6 +22,8 @@
                 <option name="svm" value="svm" selected>Support Vector Classifier (95.0%)</option>
                 <option name="knn" value="knn">K Nearest Neigbors (91.7%)</option>
                 <option name="lr" value="lr">Logistic Regression (92.1%)</option>
+                <option name="nb" value="nb">Naive Bayes (92.3%)</option>
+                <option name="nn" value="nn">Neural Network (95.3%)</option>
             </select>
             <button
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-3 py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
@@ -36,7 +38,7 @@
                 readonly>{{scrape_url}}</textarea>
             <label class="block text-gray-700 text-sm font-bold">News Title:</label>
             <textarea type="text" placeholder="News Title"
-                class="text-xl mt-4 w-full py-1 px-3 text-gray-700 leading-tight"
+                class="mt-4 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
                 readonly>{{news_title}}</textarea>
             <label class="block text-gray-700 text-sm font-bold">News Content:</label>
             <textarea placeholder="News Content"
@@ -51,7 +53,7 @@
                     class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">#topic3</span>
             </div>
 
-            <p class="mt-4">Sentiment: {% if sentiment == 'negative' %}<span
+            <p class="mt-4 font-bold">Sentiment: {% if sentiment == 'negative' %}<span
                     class="text-l bg-red-300 text-red-800 font-medium me-2 px-2.5 py-0.5 rounded">{{sentiment}}</span>{% else %}<span class="bg-green-300 text-green-800 text-l font-medium me-2 px-2.5 py-0.5 rounded">{{sentiment}}</span>{% endif %}</p>
 
             <p>Category: <span class="font-semibold">[Specify category]</span></p>
@@ -67,7 +69,14 @@
         {% elif scraping_issue %}
         <h1 class="text-center text-2xl font-bold">We got an issue during scraping</h1>
         <h1 class="text-center text-l">Please try again with a different link</h1>
-        <img class="mx-auto mt-5 h-auto max-w-xs rounded-lg" src="{% static 'images/scraping_error.svg' %}" alt="image description">
+        <creattie-embed
+            src="{% static 'images/page_not_found.json' %}"
+            delay="0"
+            speed="100"
+            frame_rate="24"
+            trigger="loop" class="mx-auto max-w-xs">
+            </creattie-embed>
+        {% comment %} <img class="mx-auto mt-5 h-auto max-w-xs rounded-lg" src="{% static 'images/scraping_error.svg' %}" alt="image description"> {% endcomment %}
         {% endif %}
     </div>
 </div>
@@ -208,8 +217,8 @@
 
     const getChartOptions1 = () => {
         return {
-            series: [52.8, 26.8 + 20.4],
-            colors: ["#1C64F2", "#16BDCA"],
+            series: {{probabilities | safe}},
+            colors: ["#FF3838", "#5463FF"],
             chart: {
                 height: 420,
                 width: "100%",
@@ -239,7 +248,7 @@
                     }
                 },
             },
-            labels: ["Positive", "Negative"],
+            labels: ["Negative", "Positive"],
             dataLabels: {
                 enabled: true,
                 style: {
@@ -253,14 +262,14 @@
             yaxis: {
                 labels: {
                     formatter: function (value) {
-                        return value + "%"
+                        return String(parseFloat(value).toFixed(2)) + "%"
                     },
                 },
             },
             xaxis: {
                 labels: {
                     formatter: function (value) {
-                        return value + "%"
+                        return String(parseFloat(value).toFixed(2)) + "%"
                     },
                 },
                 axisTicks: {
