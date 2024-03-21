@@ -26,9 +26,13 @@ def news_analyzer(request):
                         "sentiment":sentiment_result, 
                         "scrape_url":scrape_url,
                         "scraping_issue":scraping_issue, 
-                        "probabilities": probabilities}
+                        "probabilities": probabilities,
+                        "model_choice":model_choice}
                 return render(request=request, template_name="news_analyzer/analyzer.html", context=context)
             except:
                 scraping_issue = True
                 return render(request=request, template_name="news_analyzer/analyzer.html", context={"scrape_url":scrape_url, "scraping_issue":scraping_issue})
     return render(request=request, template_name="news_analyzer/analyzer.html")
+
+
+
