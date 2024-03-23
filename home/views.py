@@ -1,6 +1,4 @@
 from django.shortcuts import render
-from ML_Utils.Sentiment import Sentiment
-from Stemmer import Stemmer
 
 
 def home_page(request):

@@ -3,5 +3,5 @@ from news_analyzer import views
 
 
 urlpatterns = [
-    path('', views.news_analyzer, name='news_analyzer'),
+    path('', views.NewsAnalyzerView.as_view(), name='news_analyzer'),
 ]
