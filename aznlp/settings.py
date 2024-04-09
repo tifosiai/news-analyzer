@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "news_analyzer.apps.NewsAnalyzerConfig",
     "home.apps.HomeConfig",
     "django.contrib.admin",
     "django.contrib.auth",

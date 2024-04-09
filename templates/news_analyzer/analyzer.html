@@ -1,0 +1,467 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/analyzer.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+<!-- Increased the width to w-3/4 to make the container wider -->
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-3/4 my-10">
+        <h1 class="text-center text-4xl font-bold mb-10">Auto News Analyzer</h1>
+        <!-- Form Section -->
+        <form class="mb-4" method="post" , action="{% url 'news_analyzer' %}" id="newsForm">
+            {% csrf_token %}
+            <label for="inputText" class="block text-gray-700 text-sm font-bold mb-2">News URL here:</label>
+            <input name="scrape_url" type="text" id="inputText" value="{{scrape_url}}"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="https://oxu.az/sport/847658">
+            <select id="dropdown" name="model_choice"
+                class="mt-2 block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                <option {% if model_choice == 'svm' %} selected {% endif %} value="svm">Support Vector Classifier
+                    (95.0%)</option>
+                <option {% if model_choice == 'knn' %} selected {% endif %} value="knn">K Nearest Neigbors
+                    (91.7%)</option>
+                <option {% if model_choice == 'lr' %} selected {% endif %} value="lr">Logistic Regression
+                    (92.1%)</option>
+                <option {% if model_choice == 'nb' %} selected {% endif %} value="nb">Naive Bayes (92.3%)</option>
+                <option {% if model_choice == 'nn' %} selected {% endif %} value="nn">Neural Network (95.3%)
+                </option>
+            </select>
+            <button
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold mt-3 py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
+        </form> 
+        <!-- Display Section -->
+        {% if scrape_url and not scraping_issue%}
+        <div class="mt-8">
+            <label class="block text-gray-700 text-sm font-bold">Scraped Link:</label>
+            <textarea type="text" placeholder="Scraped Link"
+                class="text-sm mt-4 shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 leading-tight resize-none"
+                readonly>{{scrape_url}}</textarea>
+            <label class="block text-gray-700 text-sm font-bold">News Title:</label>
+            <textarea type="text" placeholder="News Title"
+                class="mt-4 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight resize-none"
+                readonly>{{news_title}}</textarea>
+            <label class="block text-gray-700 text-sm font-bold">News Content:</label>
+            <textarea placeholder="News Content"
+                class="mt-4 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight"
+                rows="10" readonly>{{news_content}}</textarea>
+            <div class="mt-4">
+                <span
+                    class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#topic1</span>
+                <span
+                    class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#topic2</span>
+                <span
+                    class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">#topic3</span>
+            </div>
+
+            <p class="mt-4 font-bold">Sentiment: {% if sentiment == 'negative' %}<span
+                    class="text-l bg-red-300 text-red-800 font-medium me-2 px-2.5 py-0.5 rounded">{{sentiment}}</span>{% else %}<span class="bg-green-300 text-green-800 text-l font-medium me-2 px-2.5 py-0.5 rounded">{{sentiment}}</span>{% endif %}</p>
+
+            <!-- <p>Category: <span class="font-semibold">[Specify category]</span></p> -->
+            <div class="flex flex-col md:flex-row">
+                <div class="w-full md:w-1/2 py-6" id="donut-chart"></div>
+                <div class="w-full md:w-1/2 py-6" id="column-chart"></div>
+            </div>
+            <div class="flex flex-col md:flex-row">
+                <div class="w-full md:w-1/2 py-6" id="pie-chart-1"></div>
+                <div class="w-full md:w-1/2 py-6" id="pie-chart-2"></div>
+            </div>
+        </div>
+        {% elif scraping_issue %}
+        <h1 class="text-center text-2xl font-bold">We got an issue during scraping</h1>
+        <h1 class="text-center text-l">You might want to use <a class="font-medium text-blue-600 dark:text-blue-500 hover:text-blue-400" href="{% url 'manual_analyzer' %}">Manual Analyzer</a></h1>
+        <creattie-embed
+            src="{% static 'images/page_not_found.json' %}"
+            delay="0"
+            speed="100"
+            frame_rate="24"
+            trigger="loop" class="mx-auto max-w-xs">
+            </creattie-embed>
+        {% comment %} <img class="mx-auto mt-5 h-auto max-w-xs rounded-lg" src="{% static 'images/scraping_error.svg' %}" alt="image description"> {% endcomment %}
+        {% endif %}
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<script>
+
+    const getChartOptions = () => {
+        return {
+            series: [15.3, 19.7, 10.0, 25.0, 5.0, 18.0, 7.0],
+            colors: ["#1C64F2", "#16BDCA", "#FDBA8C", "#E74694", "#C42415", "#FDAA8C", "#E14694"],
+            chart: {
+                height: 320,
+                width: "100%",
+                type: "donut",
+            },
+            title: {
+                text: "Category Confidence", // Title text
+                align: 'center', // Can be left, center, or right
+                margin: 10,
+                style: {
+                    fontSize: '15px',
+                    fontFamily: 'Inter, sans-serif',
+                }
+            },
+            stroke: {
+                colors: ["transparent"],
+                lineCap: "",
+            },
+            plotOptions: {
+                pie: {
+                    donut: {
+                        labels: {
+                            show: true,
+                            name: {
+                                show: true,
+                                fontFamily: "Inter, sans-serif",
+                                offsetY: 20,
+                            },
+                            total: {
+                                showAlways: true,
+                                show: true,
+                                label: "Unique visitors",
+                                fontFamily: "Inter, sans-serif",
+                                formatter: function (w) {
+                                    const sum = w.globals.seriesTotals.reduce((a, b) => {
+                                        return a + b
+                                    }, 0)
+                                    return 40 + '%'
+                                },
+                            },
+                            value: {
+                                show: true,
+                                fontFamily: "Inter, sans-serif",
+                                offsetY: -20,
+                                formatter: function (value) {
+                                    return 40 + "%"
+                                },
+                            },
+                        },
+                        size: "70%",
+                    },
+                },
+            },
+            grid: {
+                padding: {
+                    top: -2,
+                },
+            },
+            labels: ["Dünya", "Hadisə", "Kriminal", "Siyasət", "Sosial", "Cəmiyyət", "İdman"],
+            dataLabels: {
+                enabled: false,
+            },
+            legend: {
+                position: "bottom",
+                fontFamily: "Inter, sans-serif",
+            },
+            yaxis: {
+                labels: {
+                    formatter: function (value) {
+                        return value + "%"
+                    },
+                },
+            },
+            xaxis: {
+                labels: {
+                    formatter: function (value) {
+                        return value + "%"
+                    },
+                },
+                axisTicks: {
+                    show: false,
+                },
+                axisBorder: {
+                    show: false,
+                },
+            },
+        }
+    }
+
+    if (document.getElementById("donut-chart") && typeof ApexCharts !== 'undefined') {
+        const chart = new ApexCharts(document.getElementById("donut-chart"), getChartOptions());
+        chart.render();
+
+        // Get all the checkboxes by their class name
+        const checkboxes = document.querySelectorAll('#devices input[type="checkbox"]');
+
+        // Function to handle the checkbox change event
+        function handleCheckboxChange(event, chart) {
+            const checkbox = event.target;
+            if (checkbox.checked) {
+                switch (checkbox.value) {
+                    case 'desktop':
+                        chart.updateSeries([15.1, 22.5, 4.4, 8.4]);
+                        break;
+                    case 'tablet':
+                        chart.updateSeries([25.1, 26.5, 1.4, 3.4]);
+                        break;
+                    case 'mobile':
+                        chart.updateSeries([45.1, 27.5, 8.4, 2.4]);
+                        break;
+                    default:
+                        chart.updateSeries([55.1, 28.5, 1.4, 5.4]);
+                }
+
+            } else {
+                chart.updateSeries([35.1, 23.5, 2.4, 5.4]);
+            }
+        }
+
+        // Attach the event listener to each checkbox
+        checkboxes.forEach((checkbox) => {
+            checkbox.addEventListener('change', (event) => handleCheckboxChange(event, chart));
+        });
+    }
+
+
+    const getChartOptions1 = () => {
+        return {
+            series: {{probabilities | safe}},
+            colors: ["#FF3838", "#5463FF"],
+            chart: {
+                height: 420,
+                width: "100%",
+                type: "pie",
+            },
+            title: {
+                text: "Sentiment Confidence", // Title text
+                align: 'center', // Can be left, center, or right
+                margin: 10,
+                style: {
+                    fontSize: '15px',
+                    fontFamily: 'Inter, sans-serif',
+                }
+            },
+            stroke: {
+                colors: ["white"],
+                lineCap: "",
+            },
+            plotOptions: {
+                pie: {
+                    labels: {
+                        show: true,
+                    },
+                    size: "100%",
+                    dataLabels: {
+                        offset: -25
+                    }
+                },
+            },
+            labels: ["Negative", "Positive"],
+            dataLabels: {
+                enabled: true,
+                style: {
+                    fontFamily: "Inter, sans-serif",
+                },
+            },
+            legend: {
+                position: "bottom",
+                fontFamily: "Inter, sans-serif",
+            },
+            yaxis: {
+                labels: {
+                    formatter: function (value) {
+                        return String(parseFloat(value).toFixed(2)) + "%"
+                    },
+                },
+            },
+            xaxis: {
+                labels: {
+                    formatter: function (value) {
+                        return String(parseFloat(value).toFixed(2)) + "%"
+                    },
+                },
+                axisTicks: {
+                    show: false,
+                },
+                axisBorder: {
+                    show: false,
+                },
+            },
+        }
+    }
+
+    if (document.getElementById("pie-chart-1") && typeof ApexCharts !== 'undefined') {
+        const chart1 = new ApexCharts(document.getElementById("pie-chart-1"), getChartOptions1());
+        chart1.render();
+    }
+
+
+
+    const getChartOptions2 = () => {
+        return {
+            series: [52.8, 26.8 + 20.4],
+            colors: ["#1C64F2", "#16BDCA", "#9061F9"],
+            chart: {
+                height: 420,
+                width: "100%",
+                type: "pie",
+            },
+            title: {
+                text: "Lexicon Distribution", // Title text
+                align: 'center', // Can be left, center, or right
+                margin: 10,
+                style: {
+                    fontSize: '15px',
+                    fontFamily: 'Inter, sans-serif',
+                },
+            },
+            stroke: {
+                colors: ["white"],
+                lineCap: "",
+            },
+            plotOptions: {
+                pie: {
+                    labels: {
+                        show: true,
+                    },
+                    size: "100%",
+                    dataLabels: {
+                        offset: -25
+                    }
+                },
+            },
+            labels: ["Positive", "Negative"],
+            dataLabels: {
+                enabled: true,
+                style: {
+                    fontFamily: "Inter, sans-serif",
+                },
+            },
+            legend: {
+                position: "bottom",
+                fontFamily: "Inter, sans-serif",
+            },
+            yaxis: {
+                labels: {
+                    formatter: function (value) {
+                        return value + "%"
+                    },
+                },
+            },
+            xaxis: {
+                labels: {
+                    formatter: function (value) {
+                        return value + "%"
+                    },
+                },
+                axisTicks: {
+                    show: false,
+                },
+                axisBorder: {
+                    show: false,
+                },
+            },
+        }
+    }
+
+    if (document.getElementById("pie-chart-2") && typeof ApexCharts !== 'undefined') {
+        const chart2 = new ApexCharts(document.getElementById("pie-chart-2"), getChartOptions2());
+        chart2.render();
+    }
+
+
+
+    const options = {
+        colors: ["#1A56DB", "#FDBA8C"],
+        title: {
+            text: "6 Most Frequent Words", // Title text
+            align: 'center', // Can be left, center, or right
+            margin: 5,
+            style: {
+                fontSize: '15px',
+                fontFamily: 'Inter, sans-serif',
+            },
+        },
+        series: [
+            {
+                name: "count",
+                color: "#00FF00",
+                data: {{common_words | safe}},
+            },
+        ],
+        chart: {
+            type: "bar",
+            height: "320px",
+            fontFamily: "Inter, sans-serif",
+            toolbar: {
+                show: false,
+            },
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: "60%",
+                borderRadiusApplication: "end",
+                borderRadius: 8,
+            },
+        },
+        tooltip: {
+            shared: true,
+            intersect: false,
+            style: {
+                fontFamily: "Inter, sans-serif",
+            },
+        },
+        states: {
+            hover: {
+                filter: {
+                    type: "darken",
+                    value: 1,
+                },
+            },
+        },
+        stroke: {
+            show: true,
+            width: 0,
+            colors: ["transparent"],
+        },
+        grid: {
+            show: false,
+            strokeDashArray: 4,
+            padding: {
+                left: 2,
+                right: 2,
+                top: -14
+            },
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        legend: {
+            show: false,
+        },
+        xaxis: {
+            floating: false,
+            labels: {
+                show: true,
+                style: {
+                    fontFamily: "Inter, sans-serif",
+                    cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+                }
+            },
+            axisBorder: {
+                show: false,
+            },
+            axisTicks: {
+                show: false,
+            },
+        },
+        yaxis: {
+            show: false,
+        },
+        fill: {
+            opacity: 1,
+        },
+    }
+
+    if (document.getElementById("column-chart") && typeof ApexCharts !== 'undefined') {
+        const chart = new ApexCharts(document.getElementById("column-chart"), options);
+        chart.render();
+    }
+</script>
+
+{% endblock content %}

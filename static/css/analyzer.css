@@ -1,0 +1,16 @@
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.gap-4 {
+    gap: 1rem;
+    /* Adjust the gap size according to your preference */
+}
+

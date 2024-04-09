@@ -409,7 +409,6 @@ def load_pos_model():
     model = torch.load(
         model_path,
         map_location=lambda storage, loc: storage)
-    print(model)
     model = model["model"]
     model.eval()
     model.crf.device = device
