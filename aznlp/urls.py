@@ -17,8 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 import home
+import news_analyzer
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('',include('home.urls'))
+    path('',include('home.urls')),
+    path('news_analyzer/',include('news_analyzer.urls'))
 ]
