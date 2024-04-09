@@ -8,7 +8,7 @@ from .forms import NewsAnalyzerForm
 
 
 
-# Create your views here.
+
 class NewsAnalyzerView(View):
     def post(self, request):
         # Checks if there were any problems during scraping
@@ -45,3 +45,36 @@ class NewsAnalyzerView(View):
         # Handle GET requests (if needed)
         return render(request=request, template_name="news_analyzer/analyzer.html")
 
+
+
+class ManualNewsAnalyzerView(View):
+    def post(self, request):
+        # Checks if there were any problems during scraping
+        scraping_issue = False
+        if "content" in request.POST:
+            content = request.POST.get('content')
+            model_choice = request.POST.get('model_choice')
+            sentiment = Sentiment(model=model_choice)
+            text_analyzer = TextAnalyzer()
+            stemmer = Stemmer()
+            if not content:
+                return render(request=request, template_name="news_analyzer/manual_analyzer.html")
+            try:
+                input_text = stemmer.stem(content)
+                sentiment_result = sentiment.predict(input_text)
+                probabilities = sentiment.get_probabilities(input_text)
+                most_common_words = text_analyzer.get_most_frequent_words(input_text, 6)
+                context = { "sentiment": sentiment_result, 
+                           "content": content,
+                           "scraping_issue": scraping_issue, 
+                           "probabilities": probabilities,
+                           "model_choice": model_choice,
+                           "common_words": most_common_words}
+                return render(request=request, template_name="news_analyzer/manual_analyzer.html", context=context)
+            except:
+                scraping_issue = True
+                return render(request=request, template_name="news_analyzer/manual_analyzer.html", context={"model_choice":model_choice, "content": content})
+
+    def get(self, request):
+        # Handle GET requests (if needed)
+        return render(request=request, template_name="news_analyzer/manual_analyzer.html")
