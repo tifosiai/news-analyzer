@@ -1,0 +1,46 @@
+version: "3.7"
+
+services:
+  app:
+    volumes:
+      - static_data:/app/staticfiles
+      - media_data:/app/mediafiles
+    env_file:
+      - secrets.env
+
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    command: sh -c "
+                    python manage.py migrate &&
+                    python manage.py collectstatic --no-input &&
+                    gunicorn --workers=3 --bind 0.0.0.0:8000 codeany.wsgi:application"
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_data:/app/staticfiles
+      - media_data:/app/mediafiles
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - app
+
+  db:
+   image: postgres:14.0-alpine
+   volumes:
+     - postgres_data:/var/lib/postgresql/data/
+   env_file:
+     - db_main.env
+   ports:
+      - "5432:5432"
+   restart: on-failure
+
+
+volumes:
+  postgres_data:
+  static_data:
+  media_data:
+
