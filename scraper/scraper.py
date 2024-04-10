@@ -8,7 +8,7 @@ import pandas as pd
 
 class Scraper:
     def __init__(self):
-        self.data = pd.read_excel("ML_Utils/data/xpath_data.xlsx")
+        self.data = pd.read_excel(r"scraper\data\xpath_data.xlsx")
     
     def __get_host(self, link):
         parsed_url = urlparse(link)
