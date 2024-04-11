@@ -1,18 +1,27 @@
-FROM python:3.9-alpine
+FROM ubuntu:20.04
 
 ENV PATH = "/script:${PATH}"
 
 COPY ./requirements.txt /requirements.txt
-RUN apk add --update --no-cache --virtual .tmp gcc g++ libc-dev linux-headers \
-    && apk add --virtual build-deps gcc python3-dev musl-dev \
-    && apk add postgresql \
-    && apk add postgresql-dev \
-    && pip install psycopg2 \
-    && apk add jpeg-dev zlib-dev libjpeg \
-    && pip install Pillow \
-    && apk del build-deps
-RUN pip install --upgrade pip
-RUN pip install -r /requirements.txt
+RUN apt update
+RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get -y install tzdata
+RUN apt install pip -y
+RUN apt install libpq-dev -y
+RUN apt install -y  gcc g++ libc-dev  \
+    && apt-get install -y gcc python3-dev musl-dev \
+    && apt install -y postgresql
+
+RUN apt install build-essential -y
+RUN apt install libpq-dev -y
+RUN apt update
+RUN python3 -m pip install --upgrade pip
+RUN apt-get install -y libjpeg-dev zlib1g-dev 
+RUN apt-get install libmysqlclient-dev -y
+RUN python3 -m pip install --upgrade Pillow 
+RUN apt install -y mysql-server  
+RUN apt install -y python3.9
+RUN python3 -m pip install --upgrade pip
+RUN python3.9 -m pip install -r /requirements.txt
 RUN apk del .tmp
 
 
