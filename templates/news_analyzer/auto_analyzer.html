@@ -9,7 +9,7 @@
     <div class="bg-white p-6 rounded-lg shadow-lg w-3/4 my-10">
         <h1 class="text-center text-4xl font-bold mb-10">Auto News Analyzer</h1>
         <!-- Form Section -->
-        <form class="mb-4" method="post" , action="{% url 'news_analyzer' %}" id="newsForm">
+        <form class="mb-4" method="post" , action="{% url 'auto_news_analyzer' %}" id="newsForm">
             {% csrf_token %}
             <label for="inputText" class="block text-gray-700 text-sm font-bold mb-2">News URL here:</label>
             <input name="scrape_url" type="text" id="inputText" value="{{scrape_url}}"

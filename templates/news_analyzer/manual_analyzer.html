@@ -9,7 +9,7 @@
     <div class="bg-white p-6 rounded-lg shadow-lg w-3/4 my-10">
         <h1 class="text-center text-4xl font-bold mb-10">Manual News Analyzer</h1>
         <!-- Form Section -->
-        <form class="mb-4" method="post" , action="{% url 'manual_analyzer' %}" id="newsForm">
+        <form class="mb-4" method="post" , action="{% url 'manual_news_analyzer' %}" id="newsForm">
             {% csrf_token %}
             <label for="inputText" class="block text-gray-700 text-sm font-bold mb-2">News Content here:</label>
             <textarea name="content" type="text" id="inputText"

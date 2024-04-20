@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="flex flex-col text-center w-full mb-20">
+      <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Choose Input Mode</h1>
+      <p class="lg:w-2/3 mx-auto leading-relaxed text-base"><span class="font-medium">Automatic</span> analyzer is more convenient but may not work for all links</p>
+    </div>
+    <div class="flex flex-wrap -m-4 text-center">
+      <div class="flex p-4 md:w-1/2 sm:w-1/2 w-full">
+        <div class="border-2 border-gray-200 px-8 py-8 md:w-2/3 sm:w-2/3 w-full ml-auto rounded-lg flex flex-col justify-between">
+          <h2 class="title-font font-medium text-3xl text-gray-900 mb-5">Automatic Mode</h2>
+          <p class="leading-relaxed mb-5">Simply insert your link and we will do the rest</p>
+          <img src="{% static 'images/auto_news_analyzer.svg' %}" class="m-auto h-1/2 w-1/2 mb-5"></img>
+          <a href="{% url 'auto_news_analyzer' %}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Analyze</a>
+        </div>
+      </div>
+      <div class="flex p-4 md:w-1/2 sm:w-1/2 w-full">
+        <div class="border-2 border-gray-200 px-8 py-8 md:w-2/3 sm:w-2/3 w-full mr-auto rounded-lg flex flex-col justify-between">
+          <h2 class="title-font font-medium text-3xl text-gray-900 mb-5">Manual Mode</h2>
+          <p class="leading-relaxed mb-5">You have to copy-paste the content of the desired News Article</p>
+          <img src="{% static 'images/manual_news_analyzer.svg' %}" class="m-auto h-1/2 w-1/2 mb-5"></img>
+          <a href="{% url 'manual_news_analyzer' %}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Analyze</a>
+        </div>  
+      </div>
+    </div>
+    
+  </div>
+</section>
+{% endblock content %}
