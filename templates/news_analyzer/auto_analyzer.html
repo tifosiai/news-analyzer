@@ -65,7 +65,7 @@
         </div>
         {% elif scraping_issue %}
         <h1 class="text-center text-2xl font-bold">We got an issue during scraping</h1>
-        <h1 class="text-center text-l">You might want to use <a class="font-medium text-blue-600 dark:text-blue-500 hover:text-blue-400" href="{% url 'manual_analyzer' %}">Manual Analyzer</a></h1>
+        <h1 class="text-center text-l">You might want to use <a class="font-medium text-blue-600 dark:text-blue-500 hover:text-blue-400" href="{% url 'manual_news_analyzer' %}">Manual Analyzer</a></h1>
         <creattie-embed
             src="{% static 'images/page_not_found.json' %}"
             delay="0"
