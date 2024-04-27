@@ -68,8 +68,8 @@
 
     const getChartOptions = () => {
         return {
-            series: [15.3, 19.7, 10.0, 25.0, 5.0, 18.0, 7.0],
-            colors: ["#1C64F2", "#16BDCA", "#FDBA8C", "#E74694", "#C42415", "#FDAA8C", "#E14694"],
+            series: {{category_probabilities | safe}},
+            colors: ["#1C64F2", "#16BDCA", "#FDBA8C"],
             chart: {
                 height: 320,
                 width: "100%",
@@ -101,13 +101,13 @@
                             total: {
                                 showAlways: true,
                                 show: true,
-                                label: "Unique visitors",
+                                label: "{{category | safe}}",
                                 fontFamily: "Inter, sans-serif",
                                 formatter: function (w) {
                                     const sum = w.globals.seriesTotals.reduce((a, b) => {
                                         return a + b
                                     }, 0)
-                                    return 40 + '%'
+                                    return {{category_max_probability}} + '%'
                                 },
                             },
                             value: {
@@ -115,7 +115,7 @@
                                 fontFamily: "Inter, sans-serif",
                                 offsetY: -20,
                                 formatter: function (value) {
-                                    return 40 + "%"
+                                    return {{category_max_probability}} + "%"
                                 },
                             },
                         },
@@ -128,7 +128,7 @@
                     top: -2,
                 },
             },
-            labels: ["Dünya", "Hadisə", "Kriminal", "Siyasət", "Sosial", "Cəmiyyət", "İdman"],
+            labels: {{category_labels | safe}},
             dataLabels: {
                 enabled: false,
             },
@@ -158,7 +158,6 @@
             },
         }
     }
-
     if (document.getElementById("donut-chart") && typeof ApexCharts !== 'undefined') {
         const chart = new ApexCharts(document.getElementById("donut-chart"), getChartOptions());
         chart.render();
@@ -198,7 +197,7 @@
 
     const getChartOptions1 = () => {
         return {
-            series: {{probabilities | safe}},
+            series: {{sentiment_probabilities | safe}},
             colors: ["#FF3838", "#5463FF"],
             chart: {
                 height: 420,

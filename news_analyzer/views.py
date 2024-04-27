@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse
 from scraper.scraper import Scraper
 from ML_Utils.Sentiment import Sentiment
 from ML_Utils.TextAnalyzer import TextAnalyzer
+from ML_Utils.CategoryClassifier import CategoryClassifier
 from Stemmer import Stemmer
 from django.views import View
 from django.views.generic import TemplateView
@@ -22,6 +23,7 @@ class AutoNewsAnalyzerView(View):
             scrape_url = request.POST.get('scrape_url')
             model_choice = request.POST.get('model_choice')
             sentiment = Sentiment(model=model_choice)
+            category_classifier = CategoryClassifier()
             text_analyzer = TextAnalyzer()
             stemmer = Stemmer()
             if not scrape_url:
@@ -30,14 +32,23 @@ class AutoNewsAnalyzerView(View):
                 scraped_values = scraper.scrape(scrape_url)
                 input_text = stemmer.stem(scraped_values["Content"])
                 sentiment_result = sentiment.predict(input_text)
-                probabilities = sentiment.get_probabilities(input_text)
+                sentiment_probabilities = sentiment.get_probabilities(input_text)
+                category_result = category_classifier.predict_category(input_text).capitalize()
+                category_label_probabilities = category_classifier.get_category_probabilities(input_text)
+                category_labels = list(category_label_probabilities.keys())
+                category_probabilities = list(category_label_probabilities.values())
+                print(category_label_probabilities)
                 most_common_words = text_analyzer.get_most_frequent_words(input_text, 6)
                 context = {"news_title": scraped_values["Title"], 
                            "news_content": scraped_values["Content"], 
                            "sentiment": sentiment_result, 
+                           "category": category_result,
                            "scrape_url": scrape_url,
                            "scraping_issue": scraping_issue, 
-                           "probabilities": probabilities,
+                           "sentiment_probabilities": sentiment_probabilities,
+                           "category_probabilities": category_probabilities,
+                           "category_max_probability": max(category_probabilities),
+                           "category_labels": category_labels,
                            "model_choice": model_choice,
                            "common_words": most_common_words}
                 return render(request=request, template_name="news_analyzer/auto_analyzer.html", context=context)
@@ -61,17 +72,26 @@ class ManualNewsAnalyzerView(View):
             sentiment = Sentiment(model=model_choice)
             text_analyzer = TextAnalyzer()
             stemmer = Stemmer()
+            category_classifier = CategoryClassifier()
             if not content:
                 return render(request=request, template_name="news_analyzer/manual_analyzer.html")
             try:
                 input_text = stemmer.stem(content)
                 sentiment_result = sentiment.predict(input_text)
-                probabilities = sentiment.get_probabilities(input_text)
+                sentiment_probabilities = sentiment.get_probabilities(input_text)
+                category_result = category_classifier.predict_category(input_text).capitalize()
+                category_label_probabilities = category_classifier.get_category_probabilities(input_text)
+                category_labels = list(category_label_probabilities.keys())
+                category_probabilities = list(category_label_probabilities.values())
                 most_common_words = text_analyzer.get_most_frequent_words(input_text, 6)
                 context = { "sentiment": sentiment_result, 
+                           "category": category_result,
                            "content": content,
                            "scraping_issue": scraping_issue, 
-                           "probabilities": probabilities,
+                           "sentiment_probabilities": sentiment_probabilities,
+                           "category_probabilities": category_probabilities,
+                           "category_max_probability": max(category_probabilities),
+                           "category_labels": category_labels,
                            "model_choice": model_choice,
                            "common_words": most_common_words}
                 return render(request=request, template_name="news_analyzer/manual_analyzer.html", context=context)
