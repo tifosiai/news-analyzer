@@ -31,13 +31,14 @@ class AutoNewsAnalyzerView(View):
             try:
                 scraped_values = scraper.scrape(scrape_url)
                 input_text = stemmer.stem(scraped_values["Content"])
+                positive_counter, normalized_positive_counter, negative_counter, normalized_negative_counter = text_analyzer.get_lexicon_distribution(input_text)
+                normalized_distribution = [normalized_positive_counter, normalized_negative_counter]
                 sentiment_result = sentiment.predict(input_text)
                 sentiment_probabilities = sentiment.get_probabilities(input_text)
                 category_result = category_classifier.predict_category(input_text).capitalize()
                 category_label_probabilities = category_classifier.get_category_probabilities(input_text)
                 category_labels = list(category_label_probabilities.keys())
                 category_probabilities = list(category_label_probabilities.values())
-                print(category_label_probabilities)
                 most_common_words = text_analyzer.get_most_frequent_words(input_text, 6)
                 context = {"news_title": scraped_values["Title"], 
                            "news_content": scraped_values["Content"], 
@@ -49,6 +50,9 @@ class AutoNewsAnalyzerView(View):
                            "category_probabilities": category_probabilities,
                            "category_max_probability": max(category_probabilities),
                            "category_labels": category_labels,
+                           "positive_counter": positive_counter,
+                           "normalized_distribution": normalized_distribution,
+                           "negative_counter": negative_counter,
                            "model_choice": model_choice,
                            "common_words": most_common_words}
                 return render(request=request, template_name="news_analyzer/auto_analyzer.html", context=context)
@@ -78,6 +82,8 @@ class ManualNewsAnalyzerView(View):
             try:
                 input_text = stemmer.stem(content)
                 sentiment_result = sentiment.predict(input_text)
+                positive_counter, normalized_positive_counter, negative_counter, normalized_negative_counter = text_analyzer.get_lexicon_distribution(input_text)
+                normalized_distribution = [normalized_positive_counter, normalized_negative_counter]
                 sentiment_probabilities = sentiment.get_probabilities(input_text)
                 category_result = category_classifier.predict_category(input_text).capitalize()
                 category_label_probabilities = category_classifier.get_category_probabilities(input_text)
@@ -92,6 +98,9 @@ class ManualNewsAnalyzerView(View):
                            "category_probabilities": category_probabilities,
                            "category_max_probability": max(category_probabilities),
                            "category_labels": category_labels,
+                           "positive_counter": positive_counter,
+                           "normalized_distribution": normalized_distribution,
+                           "negative_counter": negative_counter,
                            "model_choice": model_choice,
                            "common_words": most_common_words}
                 return render(request=request, template_name="news_analyzer/manual_analyzer.html", context=context)

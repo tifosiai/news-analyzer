@@ -198,7 +198,7 @@
     const getChartOptions1 = () => {
         return {
             series: {{sentiment_probabilities | safe}},
-            colors: ["#FF3838", "#5463FF"],
+            colors: ["#f21b3f", "#29bf12"],
             chart: {
                 height: 420,
                 width: "100%",
@@ -271,7 +271,7 @@
 
     const getChartOptions2 = () => {
         return {
-            series: [52.8, 26.8 + 20.4],
+            series: {{normalized_distribution}},
             colors: ["#1C64F2", "#16BDCA", "#9061F9"],
             chart: {
                 height: 420,

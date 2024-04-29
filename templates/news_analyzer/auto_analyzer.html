@@ -43,11 +43,11 @@
                 rows="10" readonly>{{news_content}}</textarea>
             <div class="mt-4">
                 <span
-                    class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#topic1</span>
+                    class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#azərbaycan</span>
                 <span
-                    class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#topic2</span>
+                    class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#müharibə</span>
                 <span
-                    class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">#topic3</span>
+                    class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">#zəngəzur</span>
             </div>
 
             <p class="mt-4 font-bold">Sentiment: {% if sentiment == 'negative' %}<span
@@ -216,9 +216,9 @@
     const getChartOptions1 = () => {
         return {
             series: {{sentiment_probabilities | safe}},
-            colors: ["#FF3838", "#5463FF"],
+            colors: ["#f21b3f", "#29bf12"],
             chart: {
-                height: 420,
+                height: 320,
                 width: "100%",
                 type: "pie",
             },
@@ -289,10 +289,10 @@
 
     const getChartOptions2 = () => {
         return {
-            series: [52.8, 26.8 + 20.4],
+            series: {{normalized_distribution}},
             colors: ["#1C64F2", "#16BDCA", "#9061F9"],
             chart: {
-                height: 420,
+                height: 320,
                 width: "100%",
                 type: "pie",
             },
@@ -366,7 +366,7 @@
         title: {
             text: "6 Most Frequent Words", // Title text
             align: 'center', // Can be left, center, or right
-            margin: 5,
+            margin: 2,
             style: {
                 fontSize: '15px',
                 fontFamily: 'Inter, sans-serif',
@@ -390,7 +390,7 @@
         plotOptions: {
             bar: {
                 horizontal: false,
-                columnWidth: "60%",
+                columnWidth: "40%",
                 borderRadiusApplication: "end",
                 borderRadius: 8,
             },
