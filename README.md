@@ -1,6 +1,4 @@
-# aznlp
-
-The Azerbaijani Language News Analysis System was developed to analyze news content in Azerbaijani, with the goal of providing a comprehensive understanding of the sentiment and topics expressed in the news. The project involved several key steps, including gathering, cleaning, and labeling text data for sentiment analysis, topic modeling, and category classification.
+News Analysis System was developed to analyze news content in Azerbaijani. The project involved gathering, cleaning, and labeling text data for sentiment analysis, topic modeling, and category classification, using a specific stopwords dataset. Preprocessing techniques like stemming and stopword removal were applied. A web scraping system was created for users to input news links, and a web application was designed to display visual analytics of the analyzed news, providing clear insights into sentiment and topics.
 
 To begin, a large dataset of Azerbaijani news articles was compiled from various online sources. The data was then cleaned and preprocessed to remove any unnecessary characters, punctuation, and special symbols. A specific stopwords dataset was used to eliminate common words like "the," "and," and "a" that do not carry significant meaning in the context of the news articles.
 
